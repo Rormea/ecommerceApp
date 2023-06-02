@@ -1,6 +1,7 @@
-import React, { FC } from 'react'
+import React, { FC, useMemo, useState } from 'react'
 import { IProduct } from '../../interfaces';
-import { Grid, Card, CardActionArea, CardMedia } from '@mui/material';
+import { Grid, Card, CardActionArea, CardMedia, Typography, Box, Link } from '@mui/material';
+import NextLink from 'next/link';
 
 interface Props {
     product: IProduct;
@@ -8,17 +9,40 @@ interface Props {
 
 
 export const ProductCard: FC<Props> = ({ product }) => {
+
+    const [isHovered, setIsHovered] = useState(false)
+
+    const productImage = useMemo(() => {
+        return isHovered
+            ? `products/${product.images[0]}`
+            : `products/${product.images[1]}`
+    }, [isHovered, product.images])
+
+
     return (
-        <Grid item sm={3} >
+        <Grid item sm={4} md={3}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
             <Card>
-                <CardActionArea>
-                    <CardMedia
-                        component='img'
-                        image={`products/${product.images[0]}`}
-                        alt={product.title}
-                    />
-                </CardActionArea>
+                <NextLink href='/product/slug' passHref prefetch={false} legacyBehavior >
+                    <Link>
+                        <CardActionArea>
+                            <CardMedia
+                                className='fadeIn'
+                                component='img'
+                                image={productImage}
+                                alt={product.title}
+                            />
+                        </CardActionArea>
+                    </Link>
+                </NextLink>
             </Card>
-        </Grid>
+
+            <Box sx={{ mt: 1 }} className='fadeIn' >
+                <Typography fontWeight={700}>{product.title}</Typography>
+                <Typography fontWeight={500}>{`$ ${product.price}`}</Typography>
+            </Box>
+        </Grid >
     )
-}
+};

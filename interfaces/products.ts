@@ -4,13 +4,19 @@ export interface IProduct {
     images: string[];
     inStock: number;
     price: number;
-    sizes: iSizes[];
+    sizes: iSize[];
     slug: string;
     tags: string[];
     title: string;
-    type: ITypes;
+    type: IType;
     gender: 'men' | 'women' | 'kid' | 'unisex'
+
+    //TODO: Agregar createdAt y updateAT check
+    createAt: string;
+    updatedAt: string;
 }
 
-export type iSizes = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
-export type ITypes = 'shirts' | 'pants' | 'hoodies' | 'hats';
+
+
+export type iSize = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
+export type IType = 'shirts' | 'pants' | 'hoodies' | 'hats';
