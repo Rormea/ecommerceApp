@@ -1,13 +1,21 @@
 
-import React from 'react'
+import React, { useContext } from 'react'
 
 import { Typography, AppBar, Toolbar, Box, Link, Button, IconButton, Badge } from '@mui/material';
 import NextLink from 'next/link';
 import { SearchOutlined, ShoppingCartOutlined } from '@mui/icons-material';
+import { useRouter } from 'next/router';
+import { UIContext } from '../../context';
 
 
 
 export const NavBar = () => {
+
+    const { asPath } = useRouter()
+    // console.log(asPath)
+
+    const { toglleSideMenu } = useContext(UIContext)
+
     return (
         <AppBar>
             <Toolbar>
@@ -26,17 +34,17 @@ export const NavBar = () => {
                 <Box sx={{ display: { xs: 'none', sm: 'block' } }} >
                     <NextLink href='/category/men' passHref legacyBehavior>
                         <Link>
-                            <Button>Hombres</Button>
+                            <Button color={asPath === '/category/men' ? 'primary' : 'info'} >Hombres</Button>
                         </Link>
                     </NextLink>
                     <NextLink href='/category/women' passHref legacyBehavior>
                         <Link>
-                            <Button>Mujeres</Button>
+                            <Button color={asPath === '/category/women' ? 'primary' : 'info'}>Mujeres</Button>
                         </Link>
                     </NextLink>
                     <NextLink href='/category/kids' passHref legacyBehavior>
                         <Link>
-                            <Button>Niños</Button>
+                            <Button color={asPath === '/category/kids' ? 'primary' : 'info'} >Niños</Button>
                         </Link>
                     </NextLink>
                 </Box>
@@ -58,7 +66,7 @@ export const NavBar = () => {
                     </Link>
                 </NextLink>
 
-                <Button>Menu</Button>
+                <Button onClick={toglleSideMenu} >Menu</Button>
 
 
             </Toolbar>
